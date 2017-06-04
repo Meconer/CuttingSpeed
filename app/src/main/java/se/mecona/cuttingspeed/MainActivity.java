@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
     private double getValueFromTextField(EditText editText) {
         String text = editText.getText().toString();
         if (text.isEmpty()) text = "0";
+        text = text.replace(',', '.');
         return Double.parseDouble( text );
     }
 
