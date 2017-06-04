@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar cutSpeedSeekBar;
 
     private boolean updating = false;
-    private enum SourceEnum { RPM, DIAMETER, CUTSPEED, NONE };
+    private enum SourceEnum { RPM, DIAMETER, CUTSPEED, NONE }
     private SourceEnum source = SourceEnum.NONE;
     private SourceEnum previousSource = SourceEnum.CUTSPEED;
 
@@ -43,62 +43,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setEventHandlers() {
-        diameterEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        diameterEditText.addTextChangedListener( diameterWatcher );
+        rpmEditText.addTextChangedListener( rpmWatcher );
+        cutSpeedEditText.addTextChangedListener( cutSpeedWatcher );
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if ( !updating) {
-                    updateView(SourceEnum.DIAMETER);
-                }
-            }
-        });
-
-        rpmEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if ( !updating) {
-                    updateView(SourceEnum.RPM);
-                }
-            }
-        });
-
-        cutSpeedEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if ( !updating) {
-                    updateView(SourceEnum.CUTSPEED);
-                }
-            }
-        });
+        rpmSeekBar.setOnSeekBarChangeListener( rpmSeekBarChangeListener );
+        cutSpeedSeekBar.setOnSeekBarChangeListener( cutSpeedBarChangeListener );
     }
 
     private void updateView(SourceEnum newSource) {
@@ -126,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 if ( previousSource == SourceEnum.RPM ) {
                     cutSpeed = getCutSpeedFromRpmAndDia( rpm, diameter );
                     cutSpeedEditText.setText( cutSpeedToString( cutSpeed ));
+                    cutSpeedSeekBar.setProgress( (int) cutSpeed);
                 } else if ( previousSource == SourceEnum.CUTSPEED ) {
                     rpm = getRpmFromCutSpeedAndDia( cutSpeed, diameter );
                     rpmEditText.setText( rpmToString( rpm ));
+                    rpmSeekBar.setProgress((int) rpm);
                 }
                 break;
             case RPM:
@@ -137,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 if ( previousSource == SourceEnum.DIAMETER ) {
                     cutSpeed = getCutSpeedFromRpmAndDia( rpm, diameter );
                     cutSpeedEditText.setText( cutSpeedToString( cutSpeed ));
+                    cutSpeedSeekBar.setProgress( (int) cutSpeed);
                 } else if ( previousSource == SourceEnum.CUTSPEED ) {
                     diameter = getDiameterFromCutSpeedAndRPM( cutSpeed, rpm );
                     diameterEditText.setText( diameterToString( diameter ));
@@ -148,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 if ( previousSource == SourceEnum.DIAMETER ) {
                     rpm = getRpmFromCutSpeedAndDia( cutSpeed, diameter );
                     rpmEditText.setText( rpmToString( rpm ));
+                    rpmSeekBar.setProgress((int) rpm);
                 } else if ( previousSource == SourceEnum.RPM ) {
                     diameter = getDiameterFromCutSpeedAndRPM( cutSpeed, rpm );
                     diameterEditText.setText( diameterToString( diameter ));
@@ -179,9 +133,13 @@ public class MainActivity extends AppCompatActivity {
 
         String cutSpeedText = cutSpeedToString(cutSpeed);
         cutSpeedEditText.setText( cutSpeedText );
+        cutSpeedSeekBar.setProgress( (int) cutSpeed);
 
-        String rpmText = rpmToString( getRpmFromCutSpeedAndDia( cutSpeed, diameter));
+        rpm = getRpmFromCutSpeedAndDia( cutSpeed, diameter);
+        String rpmText = rpmToString( rpm );
         rpmEditText.setText(rpmText);
+        rpmSeekBar.setProgress((int) rpm);
+
     }
 
     private String diameterToString(double diameter) {
@@ -229,5 +187,102 @@ public class MainActivity extends AppCompatActivity {
     private double getDiameterFromCutSpeedAndRPM(double cutSpeed, double rpm) {
         return 1000.0 * cutSpeed / ( rpm * Math.PI );
     }
+
+    private TextWatcher diameterWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if ( !updating) {
+                updateView(SourceEnum.DIAMETER);
+            }
+        }
+    };
+
+    private TextWatcher rpmWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if ( !updating) {
+                updateView(SourceEnum.RPM);
+                rpmSeekBar.setProgress((int) rpm);
+            }
+        }
+    };
+
+    private TextWatcher cutSpeedWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if ( !updating) {
+                updateView(SourceEnum.CUTSPEED);
+                cutSpeedSeekBar.setProgress( (int) cutSpeed);
+            }
+        }
+    };
+
+    private SeekBar.OnSeekBarChangeListener rpmSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if ( fromUser ) {
+                rpmEditText.setText( rpmToString( progress ));
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
+    private SeekBar.OnSeekBarChangeListener cutSpeedBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if ( fromUser ) {
+                cutSpeedEditText.setText( cutSpeedToString( progress ));
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
 
 }
