@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Cutting Speed</string>
+    <string name="action_settings">Settings</string>
+    <string name="diameterHint">Diameter</string>
+    <string name="rpmHint">Varvtal</string>
+    <string name="cutSpeedHint">Skärhastighet</string>
+</resources>
