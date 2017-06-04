@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
     private double diameter = 20;
     private double cutSpeed = 100;
@@ -143,15 +145,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String diameterToString(double diameter) {
-        return String.format("%.1f", diameter);
+        return String.format(Locale.getDefault(), "%.1f", diameter);
     }
 
     private String rpmToString(double rpm) {
-        return String.format("%.0f", rpm);
+        return String.format(Locale.getDefault(), "%.0f", rpm);
     }
 
     private String cutSpeedToString(double cutSpeed) {
-        return String.format("%.0f", cutSpeed);
+        return String.format(Locale.getDefault(), "%.0f", cutSpeed);
     }
 
     @Override
