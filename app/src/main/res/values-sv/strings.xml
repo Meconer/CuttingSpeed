@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Skärdata</string>
+    <string name="action_settings">Inställningar</string>
+    <string name="cutSpeedHint">Skärhastighet</string>
+    <string name="diameterHint">Diameter</string>
+    <string name="rpmHint">Varvtal</string>
+    <string name="diaLock">Lås</string>
+    <string name="dLabel">d</string>
+    <string name="vLabel">v</string>
+    <string name="nLabel">n</string>
+</resources>

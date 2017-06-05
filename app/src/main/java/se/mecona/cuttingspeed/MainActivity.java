@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Switch;
 
 import java.util.Locale;
 
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private SeekBar rpmSeekBar;
     private SeekBar cutSpeedSeekBar;
+
+    private Switch diaLockSwitch;
 
     private boolean updating = false;
     private enum SourceEnum { RPM, DIAMETER, CUTSPEED, NONE }
@@ -55,16 +58,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateView(SourceEnum newSource) {
         updating = true;
-        if ( source != newSource ) {
-            previousSource = source;
-            source = newSource;
-        }
-        if ( previousSource == SourceEnum.NONE ) {
-            if ( newSource == SourceEnum.DIAMETER ) previousSource = SourceEnum.CUTSPEED;
-            if ( newSource == SourceEnum.CUTSPEED ) previousSource = SourceEnum.DIAMETER;
-            if ( newSource == SourceEnum.RPM ) previousSource = SourceEnum.DIAMETER;
-        }
 
+        if ( diaLockSwitch.isChecked() ) {
+
+            previousSource = SourceEnum.DIAMETER;
+            if ( newSource != SourceEnum.DIAMETER) source = newSource;
+
+        } else {
+
+            if (source != newSource) {
+                previousSource = source;
+                source = newSource;
+            }
+            if (previousSource == SourceEnum.NONE) {
+                if (newSource == SourceEnum.DIAMETER) previousSource = SourceEnum.CUTSPEED;
+                if (newSource == SourceEnum.CUTSPEED) previousSource = SourceEnum.DIAMETER;
+                if (newSource == SourceEnum.RPM) previousSource = SourceEnum.DIAMETER;
+            }
+        }
         getValuesFromTextFields(source);
 
         updating = false;
@@ -130,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
 
         rpmSeekBar = (SeekBar) findViewById(R.id.rpmSeekBar);
         cutSpeedSeekBar = (SeekBar) findViewById( R.id.cutSpeedSeekBar);
+
+        diaLockSwitch = (Switch) findViewById( R.id.diaLockSwitch);
 
         String diameterText = diameterToString(diameter);
         diameterEditText.setText( diameterText);

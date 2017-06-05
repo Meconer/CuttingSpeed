@@ -12,19 +12,20 @@
         android:id="@+id/diameterEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/diameterHint"
         android:inputType="numberDecimal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/dLabel"
+        android:layout_marginLeft="0dp" />
 
     <SeekBar
         android:id="@+id/cutSpeedSeekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="24dp"
@@ -38,20 +39,21 @@
         android:id="@+id/cutSpeedEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:hint="@string/cutSpeedHint"
         android:inputType="numberDecimal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/cutSpeedSeekBar" />
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/cutSpeedSeekBar"
+        app:layout_constraintLeft_toRightOf="@+id/vLabel" />
 
     <SeekBar
         android:id="@+id/rpmSeekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="24dp"
         android:max="24000"
@@ -64,13 +66,58 @@
         android:id="@+id/rpmEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:hint="@string/rpmHint"
         android:inputType="numberDecimal"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/rpmSeekBar"
+        app:layout_constraintLeft_toRightOf="@+id/nLabel" />
+
+    <Switch
+        android:id="@+id/diaLockSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/rpmSeekBar" />
+        android:checked="true"
+        android:text="@string/diaLock"
+        app:layout_constraintLeft_toRightOf="@+id/diameterEditText"
+        app:layout_constraintTop_toTopOf="@+id/diameterEditText" />
+
+    <TextView
+        android:id="@+id/dLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/dLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/vLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cutSpeedSeekBar"
+        tools:text="@string/vLabel" />
+
+    <TextView
+        android:id="@+id/nLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rpmSeekBar"
+        tools:text="@string/nLabel" />
 
 </android.support.constraint.ConstraintLayout>
