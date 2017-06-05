@@ -91,12 +91,12 @@
         android:id="@+id/dLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/dLabel"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="24dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginTop="24dp"
+        android:text="@string/dLabel"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/vLabel"
@@ -105,9 +105,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:text="@string/vLabel"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cutSpeedSeekBar"
-        tools:text="@string/vLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/cutSpeedSeekBar" />
 
     <TextView
         android:id="@+id/nLabel"
@@ -116,8 +116,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:text="@string/nLabel"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rpmSeekBar"
-        tools:text="@string/nLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/rpmSeekBar" />
 
 </android.support.constraint.ConstraintLayout>

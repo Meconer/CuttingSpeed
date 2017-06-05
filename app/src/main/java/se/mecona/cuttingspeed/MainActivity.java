@@ -58,11 +58,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateView(SourceEnum newSource) {
         updating = true;
-
+        Log.d(LOG_TAG, "UpdateView, source = " + source);
+        Log.d(LOG_TAG, "UpdateView, previousSource = " + previousSource);
+        Log.d(LOG_TAG, "UpdateView, newSource = " + newSource);
         if ( diaLockSwitch.isChecked() ) {
 
             previousSource = SourceEnum.DIAMETER;
-            if ( newSource != SourceEnum.DIAMETER) source = newSource;
+            if ( newSource == SourceEnum.DIAMETER) {
+                previousSource = SourceEnum.CUTSPEED;
+            }
+            source = newSource;
 
         } else {
 
@@ -74,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 if (newSource == SourceEnum.DIAMETER) previousSource = SourceEnum.CUTSPEED;
                 if (newSource == SourceEnum.CUTSPEED) previousSource = SourceEnum.DIAMETER;
                 if (newSource == SourceEnum.RPM) previousSource = SourceEnum.DIAMETER;
+                source = newSource;
             }
         }
         getValuesFromTextFields(source);
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private void getValuesFromTextFields( SourceEnum source ) {
         switch (source) {
             case DIAMETER:
-                diameter = getValueFromTextField( diameterEditText );
+                //diameter = getValueFromTextField( diameterEditText );
                 Log.d(LOG_TAG, "Source diameter, value = " + diameter);
                 if ( previousSource == SourceEnum.RPM ) {
                     cutSpeed = getCutSpeedFromRpmAndDia( rpm, diameter );
@@ -213,15 +219,25 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+            if ( !updating) {
+                setDiameterFromText( s );
+                updateView(SourceEnum.DIAMETER);
+            }
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-            if ( !updating) {
-                updateView(SourceEnum.DIAMETER);
-            }
         }
     };
+
+    private void setDiameterFromText(CharSequence s) {
+        String text = s.toString();
+        Log.d(LOG_TAG, "DiameterText: " + text);
+        if ( text.isEmpty() ) text = "0";
+        text = text.replaceAll(",",".");
+        diameter = Double.parseDouble( text );
+        Log.d(LOG_TAG, "Diameter : " + diameter);
+    }
 
     private TextWatcher rpmWatcher = new TextWatcher() {
         @Override
